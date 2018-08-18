@@ -51,7 +51,7 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
 
         getLogger().info("HIII");
 
-
+        plug = WGBukkit.getPlugin();
         if (plug == null || !plug.isEnabled()) {
             getLogger().warning("Could not load WorldGuard Plugin, disabling");
             getServer().getPluginManager().disablePlugin(this);
@@ -69,4 +69,3 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
     public void onDisable() {
     }
 }
-
