@@ -1,12 +1,11 @@
 name: WGRegionEffects
-main: com.mewin.WGRegionEffects.WGRegionEffectsPlugin
+main: com.paramonod.WGRegionEffects.WGRegionEffectsPlugin
 description: 'WorldGuard extension to let players automatically get a potion effect when they enter the region and lose it when they leave the region.'
 version: 1.4
 
-authors: [ mewin ]
-depend: [ WorldGuard, WGCustomFlags, WGRegionEvents ]
+authors: [ paramonod ]
+depend: [ WorldGuard ]
 softdepend: [ WorldEdit ]
-authors: [ mewin ]
 
 commands:
   toggleeffects:

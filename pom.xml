@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.mewin</groupId>
-  <artifactId>WGRegionEffects</artifactId>
-  <version>1.4.1</version>
-  <packaging>jar</packaging>
+    <groupId>com.paramonod</groupId>
+    <artifactId>WGRegionEffects</artifactId>
+    <version>1.4.1</version>
+    <packaging>jar</packaging>
 
-  <name>WGRegionEffects</name>
-  <url>http://maven.apache.org</url>
+    <name>WGRegionEffects</name>
+    <url>http://maven.apache.org</url>
     <build>
         <plugins>
             <plugin>
@@ -23,54 +23,43 @@
         </plugins>
     </build>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  
-  <repositories>
-      <repository>
-          <id>bukkit-repo</id>
-          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-      </repository>
-      <repository>
-          <id>sk89q-repo</id>
-          <url>http://maven.sk89q.com/repo/</url>
-      </repository>
-      <repository>
-          <id>mewin-repo</id>
-          <url>http://maven.mewin.de</url>
-      </repository>
-  </repositories>
-  
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
-        <!-- Bukkit Dependency -->
+        <!-- Spigot Dependency -->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.9.2-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <!-- WorldGuard Dependency -->
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <version>6.1</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.12-R0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-        <!-- WGCustomFlags dependency -->
+        <!-- WorldGuard Dependency -->
         <dependency>
-            <groupId>com.mewin</groupId>
-            <artifactId>WGCustomFlags</artifactId>
-            <version>1.9</version>
-            <type>jar</type>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-legacy</artifactId>
+            <version>6.2</version>
+            <scope>provided</scope>
         </dependency>
-        <!-- WGRegionEvents dependency -->
+        <!-- WorldEdit dependency -->
         <dependency>
-            <groupId>com.mewin</groupId>
-            <artifactId>WGRegionEvents</artifactId>
-            <version>1.1</version>
-            <type>jar</type>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>worldedit-bukkit</artifactId>
+            <version>6.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
