@@ -18,6 +18,7 @@ package com.paramonod.WGRegionEffects;
 
 import com.paramonod.WGRegionEffects.flags.CustomFlags;
 import com.paramonod.WGRegionEffects.flags.EffectFlag;
+import com.paramonod.WGRegionEffects.flags.GroupsFlag;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.Flag;
 
@@ -28,7 +29,8 @@ import com.sk89q.worldguard.session.SessionManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class WGRegionEffectsPlugin extends JavaPlugin {
-    static final Flag EFFECT_FLAG = CustomFlags.EFFECT_FLAG;
+    private static final Flag EFFECT_FLAG = CustomFlags.EFFECT_FLAG;
+    private static final Flag GROUPS_FLAG = CustomFlags.GROUPS_FLAG;
     private WorldGuardPlugin plug;
 
     @Override
@@ -38,6 +40,7 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
         try {
             // register our flag with the registry
             registry.register(EFFECT_FLAG);
+            registry.register(GROUPS_FLAG);
             getServer().getLogger().info("Plugin registered");
         } catch (FlagConflictException e) {
             getServer().getLogger().warning("Plugin not registered");
@@ -62,6 +65,7 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
 
         SessionManager sessionManager = plug.getSessionManager();
         sessionManager.registerHandler(EffectFlag.FACTORY, null);
+        sessionManager.registerHandler(GroupsFlag.FACTORY, null);
 
     }
 
