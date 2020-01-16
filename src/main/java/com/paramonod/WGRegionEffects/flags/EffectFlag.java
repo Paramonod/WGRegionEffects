@@ -1,10 +1,14 @@
 package com.paramonod.WGRegionEffects.flags;
 
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.session.MoveType;
 import com.sk89q.worldguard.session.Session;
 import com.sk89q.worldguard.session.handler.Handler;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -30,14 +34,14 @@ public class EffectFlag extends Handler {
         }
     }
 
-
     @Override
-    public boolean onCrossBoundary(Player player, Location from, Location to, ApplicableRegionSet toSet,
+    public boolean onCrossBoundary(LocalPlayer player, com.sk89q.worldedit.util.Location from,
+                                   com.sk89q.worldedit.util.Location to, ApplicableRegionSet toSet,
                                    Set<ProtectedRegion> entered, Set<ProtectedRegion> exited, MoveType moveType) {
-        String effects = toSet.queryValue(getPlugin().wrapPlayer(player), CustomFlags.EFFECT_FLAG);
+        String effects = toSet.queryValue(player, CustomFlags.EFFECT_FLAG);
         ArrayList<String[]> ApplySet = new ArrayList<>();
         if (effects != null)
-         ApplySet = getEffectsSet(effects);
+            ApplySet = getEffectsSet(effects);
         ArrayList<PotionEffectType> RevokeSet = new ArrayList<>();
         for (ProtectedRegion rg : exited) {
             String EffectFlag = rg.getFlag(CustomFlags.EFFECT_FLAG);
@@ -57,15 +61,23 @@ public class EffectFlag extends Handler {
         return PotionEffectType.getByName(effect);
     }
 
-    private void applyEffects(ArrayList<String[]> EffectsSet, Player player) {
+    private void applyEffects(ArrayList<String[]> EffectsSet, LocalPlayer player) {
         for (String[] effectmas : EffectsSet)
-            player.addPotionEffect(new PotionEffect(castToEffect(effectmas[0].trim()), Integer.MAX_VALUE,
-                    Integer.parseInt(effectmas[1].trim())));
+            try {
+                Bukkit.getPlayer(player.getUniqueId()).addPotionEffect(new PotionEffect(castToEffect(effectmas[0].trim()), Integer.MAX_VALUE,
+                        Integer.parseInt(effectmas[1].trim())));
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
+            }
     }
 
-    private void revokeEffects(ArrayList<PotionEffectType> EffectTypeSet, Player player) {
+    private void revokeEffects(ArrayList<PotionEffectType> EffectTypeSet, LocalPlayer player) {
         for (PotionEffectType effect : EffectTypeSet)
-            player.removePotionEffect(effect);
+            try {
+                Bukkit.getPlayer(player.getUniqueId()).removePotionEffect(effect);
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
+            }
     }
 
     private ArrayList<String[]> getEffectsSet(String effects) {

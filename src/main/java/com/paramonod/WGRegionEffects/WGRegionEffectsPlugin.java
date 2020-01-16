@@ -19,24 +19,25 @@ package com.paramonod.WGRegionEffects;
 import com.paramonod.WGRegionEffects.flags.CustomFlags;
 import com.paramonod.WGRegionEffects.flags.EffectFlag;
 import com.paramonod.WGRegionEffects.flags.GroupsFlag;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.Flag;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.StringFlag;
 import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
 import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
-import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.session.SessionManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class WGRegionEffectsPlugin extends JavaPlugin {
-    private static final Flag EFFECT_FLAG = CustomFlags.EFFECT_FLAG;
-    private static final Flag GROUPS_FLAG = CustomFlags.GROUPS_FLAG;
+    private static final StringFlag EFFECT_FLAG = CustomFlags.EFFECT_FLAG;
+    private static final StringFlag GROUPS_FLAG = CustomFlags.GROUPS_FLAG;
     private WorldGuardPlugin plug;
 
     @Override
     public void onLoad() {
-        plug = WGBukkit.getPlugin();
-        FlagRegistry registry = plug.getFlagRegistry();
+        FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
         try {
             // register our flag with the registry
             registry.register(EFFECT_FLAG);
@@ -45,7 +46,6 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
         } catch (FlagConflictException e) {
             getServer().getLogger().warning("Plugin not registered");
         }
-
     }
 
     @Override
@@ -54,7 +54,7 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
 
         getLogger().info("HIII");
 
-        plug = WGBukkit.getPlugin();
+        plug = WorldGuardPlugin.inst();
         if (plug == null || !plug.isEnabled()) {
             getLogger().warning("Could not load WorldGuard Plugin, disabling");
             getServer().getPluginManager().disablePlugin(this);
@@ -63,7 +63,7 @@ public class WGRegionEffectsPlugin extends JavaPlugin {
             getLogger().info("WG Loaded");
         }
 
-        SessionManager sessionManager = plug.getSessionManager();
+        SessionManager sessionManager = WorldGuard.getInstance().getPlatform().getSessionManager();
         sessionManager.registerHandler(EffectFlag.FACTORY, null);
         sessionManager.registerHandler(GroupsFlag.FACTORY, null);
 
